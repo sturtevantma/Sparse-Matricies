@@ -1,5 +1,7 @@
 
-SparseMatrix() {
+SparseMatrix(int M_, int N_) {
+  this->M = M_;
+  this->N = N_;
   
 }
 
