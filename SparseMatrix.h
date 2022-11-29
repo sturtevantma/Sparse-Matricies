@@ -5,7 +5,7 @@ struct SparseNode {
   int y; // The vertical posistion of the node ( 0 is top row )
   int val; // The value at (x,y)
   SparseNode* next_; // A pointer to the next node
-}
+};
 
 class SparseMatrix {
   private:
@@ -27,4 +27,4 @@ class SparseMatrix {
     SparseMatrix left_multiply(SparseMatrix matrix2); // Function for left multiplication (*note this function just returns right_multiply of matrix2 with this)
     SparseMatrix right_multiply(SparseMatrix matrix2); // Function for right multiplication
     SparseMatrix add(SparseMatrix matrix2); // Function for addition
-}
+};
