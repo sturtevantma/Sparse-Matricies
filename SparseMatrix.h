@@ -15,7 +15,7 @@ class SparseMatrix {
   public:
     SparseNode* head; // A pointer to the head node
   
-    SparseMatrix(); // Constructor for SparseMatrix
+    SparseMatrix(int M, int N); // Constructor for SparseMatrix
     void append_node(int x, int y, int val); // Adds a node into the appropriate position
     void remove_node(int x, int y); // Removes a node based on coords (x,y)
 
