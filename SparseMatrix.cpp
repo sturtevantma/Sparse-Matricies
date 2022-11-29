@@ -48,7 +48,7 @@ SparseMatrix add(SparseMatrix matrix2) {
     // Loop through values in both matricies increment further back node, if either node reaches the end break;
     bool test = true;
     while(test) {
-        if(e2.next == nullptr || e1.next == nullptr) {
+        if(e2.next_ == nullptr || e1.next_ == nullptr) {
            test = false;
         }
 
@@ -61,8 +61,8 @@ SparseMatrix add(SparseMatrix matrix2) {
             out_node.val = val;
             out_matrix.append_node(out_node);
 
-            e1 = e1.next;
-            e2 = e2.next;
+            e1 = e1.next_;
+            e2 = e2.next_;
             continue;
         }
 
@@ -72,13 +72,13 @@ SparseMatrix add(SparseMatrix matrix2) {
                 SparseNode out_node = e1;
                 out_node.val = nullptr;
                 out_matrix.append_node(out_node);
-                e1 = e1.next;
+                e1 = e1.next_;
                 continue;
             } else {
                 SparseNode out_node = e2;
                 out_node.val = nullptr;
                 out_matrix.append_node(out_node);
-                e2 = e2.next;
+                e2 = e2.next_;
                 continue;
             }
         } else {
@@ -86,13 +86,13 @@ SparseMatrix add(SparseMatrix matrix2) {
             SparseNode out_node = e1;
             out_node.val = nullptr;
             out_matrix.append_node(out_node);
-            e1 = e1.next;
+            e1 = e1.next_;
             continue;
           } else {
             SparseNode out_node = e2;
             out_node.val = nullptr;
             out_matrix.append_node(out_node);
-            e2 = e2.next;
+            e2 = e2.next_;
             continue;
           }
         }
@@ -105,7 +105,7 @@ SparseMatrix add(SparseMatrix matrix2) {
           SparseNode out_node = e2;
           out_node.val = nullptr;
           out_matrix.append_node(out_node);
-          e2 = e2.next;
+          e2 = e2.next_;
         }
         SparseNode out_node = e2;
         out_node.val = nullptr;
@@ -117,7 +117,7 @@ SparseMatrix add(SparseMatrix matrix2) {
             SparseNode out_node = e1;
             out_node.val = nullptr;
             out_matrix.append_node(out_node);
-            e1 = e1.next;
+            e1 = e1.next_;
         }
         SparseNode out_node = e1;
         out_node.val = nullptr;
