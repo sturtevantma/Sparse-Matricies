@@ -6,6 +6,11 @@ SparseMatrix(int M_, int N_) {
 }
 
 void append_node(int x, int y, int val){
+  struct Sparsenode *temp = head;
+  while (temp != NULL) {
+    temp->val = val;
+  }
+  
 }
 
 void remove_node(int x, int y){
