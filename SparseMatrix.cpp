@@ -10,8 +10,12 @@ SparseMatrix::SparseMatrix(int M_, int N_) {
 
 }
 
-void append_node(int x, int y, int val){
-    
+void SparseMatrix::append_node(int x, int y, int val, SparseNode *n){
+    SparseNode *temp = this->head;
+    while(temp->next_ != nullptr) {
+        temp = temp->next_;
+    }
+    temp->next_ = n;
 
 }
 
