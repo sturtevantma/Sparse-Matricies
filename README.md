@@ -24,10 +24,10 @@ The horizontal posistion of the node ( 0 is left column )
 `SparseNode::y`  
 The vertical posistion of the node ( 0 is top row )
 
-'SparseNode::value'  
+`SparseNode::value`  
 The value at (x,y)
 
-'SparseNode::next_'  
+`SparseNode::next_`  
 A pointer to the next node
 
 ### SparseMatrix
