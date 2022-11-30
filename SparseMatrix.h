@@ -1,4 +1,3 @@
-#include <list>
 
 struct SparseNode {
   int x; // The horizontal posistion of the node ( 0 is left column )
@@ -11,6 +10,7 @@ class SparseMatrix {
   private:
     int M; // The number of rows
     int N; // The number of columns
+    int size; // The number of non-zero entries
 
   public:
     SparseNode* head; // A pointer to the head node
