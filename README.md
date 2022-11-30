@@ -28,7 +28,7 @@ The vertical posistion of the node ( 0 is top row )
 The value at (x,y)
 
 'SparseNode::next_'  
-next_
+A pointer to the next node
 
 ### SparseMatrix
 TODO Description
