@@ -22,7 +22,7 @@ public:
     SparseNode* head; // A pointer to the head node
 
     SparseMatrix(int M, int N); // Constructor for SparseMatrix
-    void append_node(int x, int y, int val, SparseNode *n); // Adds a node into the appropriate position
+    void append_node(SparseNode *n); // Adds a node into the appropriate position
     void remove_node(int x, int y); // Removes a node based on coords (x,y)
 
     SparseMatrix operator+(const SparseMatrix& matrix2); // Defines behavior for the addition operator
