@@ -19,7 +19,12 @@ void SparseMatrix::append_node(int x, int y, int val, SparseNode *n){
 
 }
 
-void remove_node(int x, int y){
+void SparseMatrix::remove_node(int x, int y){
+    SparseNode *temp = this->head;
+    while(temp->next_->next_ != nullptr) {
+        temp = temp->next_;
+    }
+    temp->next_ = nullptr;
 }
 
 SparseMatrix operator+(const SparseMatrix& matrix2) {
