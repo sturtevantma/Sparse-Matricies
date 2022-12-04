@@ -1,7 +1,8 @@
 #inlcude <stdexcept>
 
-SparseMatrix() {
-  
+SparseMatrix(int M_, int N_) {
+   this->M = M_;
+   this->N = N_;
 }
 
 void append_node(int x, int y, int val){
@@ -37,7 +38,7 @@ SparseMatrix add(SparseMatrix matrix2) {
     if(! (this->M == matrix2.M && this->N == matrix2.N) ) {
         throw std::invalid_argument("Matricies must be the same size to perform Matrix Addition");
     }
-
+  
     // Output matrix
     SparseMatrix out_matrix(this->M, this->N);
 
