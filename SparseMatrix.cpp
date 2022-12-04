@@ -26,6 +26,7 @@ void SparseMatrix::append_node(SparseNode *n, int X, int Y){
 
 void SparseMatrix::remove_node(int x, int y){
     SparseNode *temp;
+    SparseNode *newTemp;
 
     if(head->x == x && head->y == y) {
         temp = head;
@@ -33,7 +34,7 @@ void SparseMatrix::remove_node(int x, int y){
         free(temp);
     }
     else {
-        SparseNode *newTemp;
+        newTemp = head;
         while(newTemp->next_ != nullptr) {
             if (newTemp->next_->x == x && newTemp->next_->y == y) {
                 temp = newTemp->next_;
