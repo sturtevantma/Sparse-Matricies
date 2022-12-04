@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
-#include <SparseMatrix.h>
+#include "SparseMatrix.h"
 
-int main(int argc, int* argv[]) {
+int main(int argc, char* argv[]) {
   // boolean variable for each flag
   bool multiply   = false;
   bool s_multiply = false;
@@ -10,21 +10,22 @@ int main(int argc, int* argv[]) {
   bool add        = false;
   // Other variables
   std::string matrixA;
-  std::string MatrixB;
+  std::string matrixB;
   int scalar;
+  std::string s = argv[1];
   // Loop through arguments (i={1, ..., length})
-  if(argv[1] == "-M"){
+  if(s == "-M"){
     matrixA = argv[2];
     matrixB = argv[3];
     multiply = true;
-  } else if (argv[1] == "-S") {
+  } else if (s == "-S") {
     matrixA = argv[2];
     scalar = std::stoi(argv[3]);
     s_multiply = true;
-  } else if (argv[1] == "-T") {
+  } else if (s == "-T") {
     matrixA = argv[2];
     transpose = true;
-  } else if (argv[1] == "-A") {
+  } else if (s == "-A") {
     matrixA = argv[2];
     matrixB = argv[3];
     add = true;
@@ -32,24 +33,29 @@ int main(int argc, int* argv[]) {
     throw std::invalid_argument("Invalid Argument: Please see documentation on the github repo for instructions - https://github.com/sturtevantma/Sparse-Matricies");
   }
 
+  std::string fname_out = argv[argc-1];
+
   // Execute Commands
   if(multiply) {
     SparseMatrix A(matrixA);
     SparseMatrix B(matrixB);
     SparseMatrix C = A * B;
-    C.save();
+    // C.save(fname_out);
+
   } else if(add) {
     SparseMatrix A(matrixA);
     SparseMatrix B(matrixB);
     SparseMatrix C = A + B;
-    C.save();
+    // C.save(fname_out);
+
   } else if(s_multiply) {
     SparseMatrix A(matrixA);
     SparseMatrix C = A * scalar;
-    C.save();
+    // C.save(fname_out);
+
   } else if(transpose) {
     SparseMatrix A(matrixA);
     SparseMatrix At = A.transpose();
-    At.save();
+    // At.save(fname_out);
   }
 }
