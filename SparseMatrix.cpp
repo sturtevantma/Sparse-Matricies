@@ -25,7 +25,7 @@ SparseMatrix transpose() {
 
 }
 SparseMatrix left_multiply(SparseMatrix matrix2) {
-
+    return right_multiply(*this);
 }
 SparseMatrix right_multiply(SparseMatrix matrix2) {
     // When multiplying m x n matrix and n x p matrix
