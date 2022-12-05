@@ -4,7 +4,7 @@ struct SparseNode {
   int y; // The vertical posistion of the node ( 0 is top row )
   int val; // The value at (x,y)
   SparseNode* next_; // A pointer to the next node
-}
+};
 
 class SparseMatrix {
   private:
@@ -15,8 +15,8 @@ class SparseMatrix {
   public:
     SparseNode* head; // A pointer to the head node
   
-    SparseMatrix(); // Constructor for SparseMatrix
-    void append_node(int x, int y, int val); // Adds a node into the appropriate position
+    SparseMatrix(int M_, int N_); // Constructor for SparseMatrix
+    void append_node(SparseNode node2); // Adds a node into the appropriate position
     void remove_node(int x, int y); // Removes a node based on coords (x,y)
 
     SparseMatrix operator+(const SparseMatrix& matrix2); // Defines behavior for the addition operator
@@ -27,4 +27,3 @@ class SparseMatrix {
     SparseMatrix left_multiply(SparseMatrix matrix2); // Function for left multiplication (*note this function just returns right_multiply of matrix2 with this)
     SparseMatrix right_multiply(SparseMatrix matrix2); // Function for right multiplication
     SparseMatrix add(SparseMatrix matrix2); // Function for addition
-}
