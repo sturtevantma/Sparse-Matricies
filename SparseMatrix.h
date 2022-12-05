@@ -1,18 +1,19 @@
+#include <string>
+
 struct SparseNode {
-  int x; // The horizontal posistion of the node ( 0 is left column )
-  int y; // The vertical posistion of the node ( 0 is top row )
-  int val; // The value at (x,y)
-  SparseNode* next_; // A pointer to the next node
+  int x = 0; // The horizontal posistion of the node ( 0 is left column )
+  int y = 0; // The vertical posistion of the node ( 0 is top row )
+  int val = 0; // The value at (x,y)
+  SparseNode* next_ = nullptr; // A pointer to the next node
 };
 
 class SparseMatrix {
 private:
-    int M; // The number of rows
-    int N; // The number of columns
-    int size; // The number of non-zero entries
+    int M = 0; // The number of rows
+    int N = 0; // The number of columns
 
 public:
-    SparseNode* head; // A pointer to the head node
+    SparseNode* head = nullptr; // A pointer to the head node
 
     SparseMatrix(int M, int N); // Constructor for SparseMatrix
     SparseMatrix(SparseNode head, int M, int N);
@@ -28,6 +29,7 @@ public:
     SparseMatrix transpose(); // Transposes the matrix such that for every element e_xy, e_xy = e_yx (swaps the rows and columns)
     SparseMatrix left_multiply(SparseMatrix matrix2); // Function for left multiplication (*note this function just returns right_multiply of matrix2 with this)
     SparseMatrix right_multiply(SparseMatrix matrix2); // Function for right multiplication
+    SparseMatrix scalar_multiply(int scalar);
     SparseMatrix add(SparseMatrix matrix2); // Function for addition
 
     void read_file(std::string fname);

@@ -1,38 +1,79 @@
 #include "SparseMatrix.h"
 #include <stdexcept>
+#include <string>
+#include <fstream>
+#include <iostream>
 
 SparseMatrix::SparseMatrix(int M_, int N_) {
     this->M = M_;
     this->N = N_;
+    this->head = nullptr;
 }
 
-SparseMatrix::SparseMatrix(SparseNode head, int M, int N){}
-SparseMatrix::SparseMatrix(std::string fname){}
+SparseMatrix::SparseMatrix(SparseNode head, int M_, int N_){
+    this->head = &head;
+    this->M = M_;
+    this->N = N_;
+}
 
-void SparseMatrix::read_file(std::string fname){}
-void SparseMatrix::save_file(std::string fname){}
+SparseMatrix::SparseMatrix(std::string fname){
+    read_file(fname);
+}
+
+void SparseMatrix::read_file(std::string fname){
+    std::ifstream inFile(fname);
+    std::string line;
+
+    inFile >> line;
+    this->M = std::stoi(line);
+    inFile >> line;
+    this->N = std::stoi(line);
+    this->head = nullptr;
+
+    for(int y = 1; y <= this->M; y++) {
+        for(int x = 1; x <= this->N; x++) {
+                SparseNode *node = (SparseNode*)malloc(sizeof(SparseNode));
+                node->x = x;
+                node->y = y;
+                inFile >> line;
+                node->val = std::stoi(line);
+                node->next_ = nullptr;
+                if(node->val) {
+                    this->append_node(node);
+                }
+        }
+    }
+}
+void SparseMatrix::save_file(std::string fname){
+    std::ofstream out(fname);
+    out << this->M << ' ' << this->N << '\n';
+    
+    SparseNode node = *this->head;
+    for(int y = 1; y <= this->M; y++) {
+        for(int x = 1; x <= this->N; x++) {
+            if(node.x == x && node.y == y) {
+                out << node.val << ' ';
+                if(node.next_ != nullptr) {
+                    node = *node.next_;
+                }
+            } else {
+                out << "0 ";
+            }
+        }
+        out << '\n';
+    }
+}
 
 void SparseMatrix::append_node(SparseNode *n){
-    SparseNode *temp = this->head;
-    SparseNode *newTemp;
-    if (temp == nullptr) {
-        temp = new SparseNode();
-        temp->x = n->x;
-        temp->y = n->y;
-        temp->val = n->val;
-        temp->next_ = nullptr;
-        head = temp;
+    if (this->head == nullptr) {
+        this->head = n;
     }
     else {
-        while(temp->next_ != nullptr) {
+        SparseNode *temp = this->head;
+        while(temp->next_ != 0) {
             temp = temp->next_;
         }
-        newTemp = new SparseNode();
-        newTemp->x = n->x;
-        newTemp->y = n->y;
-        newTemp->val = n->val;
-        newTemp->next_ = nullptr;
-        temp->next_ = newTemp;
+        temp->next_ = n;
     }
 
 }
@@ -64,20 +105,21 @@ void SparseMatrix::remove_node(int x, int y){
 }
 
 SparseMatrix SparseMatrix::operator+(const SparseMatrix& matrix2) {
-
+    return this->add(matrix2);
 }
 
 SparseMatrix SparseMatrix::operator*(const SparseMatrix& matrix2) {
-
+    return this->right_multiply(matrix2);
 }
 
 SparseMatrix SparseMatrix::operator*(const int scalar) {
-
+    return this->scalar_multiply(scalar);
 }
 
 SparseMatrix SparseMatrix::transpose() {
-
+    return *this;
 }
+
 SparseMatrix SparseMatrix::left_multiply(SparseMatrix matrix2) {
     return right_multiply(*this);
 }
@@ -105,7 +147,7 @@ SparseMatrix SparseMatrix::right_multiply(SparseMatrix matrix2) {
     // For every row in A
     for(int j = 1; j <= this->M; j++){
         // Compare every nonzero element k
-        while(leftNode.y = j){
+        while(leftNode.y == j){
             while(rightNode.next_ != nullptr){
                 // if there is a value at this coordinate in both matrices, multiply. Otherwise, continue.
                 if (rightNode.x == j){
@@ -226,3 +268,6 @@ SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
     return out_matrix;
 }
 
+SparseMatrix SparseMatrix::scalar_multiply(int scalar) {
+    return *this;
+}
