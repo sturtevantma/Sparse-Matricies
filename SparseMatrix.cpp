@@ -1,4 +1,3 @@
-
 #include <stdexcept>
 #include "SparseMatrix.h"
 
@@ -48,7 +47,6 @@ SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
 
     SparseNode e1 = *(this->head);
     SparseNode e2 = *(matrix2.head);
-
 
     // Loop through values in both matricies increment further back node, if either node reaches the end break;
     bool test = true;
