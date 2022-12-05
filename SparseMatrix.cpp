@@ -1,3 +1,4 @@
+
 #include <stdexcept>
 #include "SparseMatrix.h"
 
@@ -44,8 +45,10 @@ SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
     SparseMatrix out_matrix(this->M, this->N);
 
     // Temporary nodes used for finding our values
+
     SparseNode e1 = *(this->head);
     SparseNode e2 = *(matrix2.head);
+
 
     // Loop through values in both matricies increment further back node, if either node reaches the end break;
     bool test = true;
@@ -56,7 +59,9 @@ SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
 
         // Add sum of both nodes into the output if they have same coordinates
         if(e1.x == e2.x && e1.y == e2.y) {
+
             int val = e1.val + e2.val;
+
             SparseNode out_node;
             out_node.x = e1.x;
             out_node.y = e1.y;
@@ -65,6 +70,7 @@ SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
 
             e1 = *e1.next_;
             e2 = *e2.next_;
+
             continue;
         }
 
@@ -72,6 +78,7 @@ SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
         if(e1.y == e2.y) {
             if(e1.x < e2.x) {
                 SparseNode out_node = e1;
+
                 out_node.next_ = nullptr;
                 out_matrix.append_node(out_node);
                 e1 = *e1.next_;
@@ -81,11 +88,13 @@ SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
                 out_node.next_ = nullptr;
                 out_matrix.append_node(out_node);
                 e2 = *e2.next_;
+
                 continue;
             }
         } else {
           if(e1.y < e2.y) {
             SparseNode out_node = e1;
+
             out_node.next_ = nullptr;
             out_matrix.append_node(out_node);
             e1 = *e1.next_;
@@ -95,6 +104,7 @@ SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
             out_node.next_ = nullptr;
             out_matrix.append_node(out_node);
             e2 = *e2.next_;
+
             continue;
           }
         }
@@ -105,24 +115,28 @@ SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
     if(e1.next_ == nullptr) {
         while(e2.next_ != nullptr) {
           SparseNode out_node = e2;
+
           out_node.next_ = nullptr;
           out_matrix.append_node(out_node);
           e2 = *e2.next_;
         }
         SparseNode out_node = e2;
         out_node.next_ = nullptr;
+
         out_matrix.append_node(out_node);
     }
 
     if(e2.next_ == nullptr) {
         while(e1.next_ != nullptr) {
             SparseNode out_node = e1;
+
             out_node.next_ = nullptr;
             out_matrix.append_node(out_node);
             e1 = *e1.next_;
         }
         SparseNode out_node = e1;
         out_node.next_ = nullptr;
+
         out_matrix.append_node(out_node);
     }
 
