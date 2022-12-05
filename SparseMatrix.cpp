@@ -1,11 +1,16 @@
-#include "SparceMatrix.h"
+#include "SparseMatrix.h"
+#include <stdexcept>
 
 SparseMatrix::SparseMatrix(int M_, int N_) {
     this->M = M_;
     this->N = N_;
-
-
 }
+
+SparseMatrix::SparseMatrix(SparseNode head, int M, int N){}
+SparseMatrix::SparseMatrix(std::string fname){}
+
+void SparseMatrix::read_file(std::string fname){}
+void SparseMatrix::save_file(std::string fname){}
 
 void SparseMatrix::append_node(SparseNode *n){
     SparseNode *temp = this->head;
@@ -108,7 +113,7 @@ SparseMatrix SparseMatrix::right_multiply(SparseMatrix matrix2) {
                 }
             }
         }
-        multMatrix.append_node(*temp);
+        multMatrix.append_node(&temp);
     }
     
     return multMatrix;
@@ -144,7 +149,7 @@ SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
             out_node.x = e1.x;
             out_node.y = e1.y;
             out_node.val = val;
-            out_matrix.append_node(out_node);
+            out_matrix.append_node(&out_node);
 
             e1 = *e1.next_;
             e2 = *e2.next_;
@@ -158,13 +163,13 @@ SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
                 SparseNode out_node = e1;
 
                 out_node.next_ = nullptr;
-                out_matrix.append_node(out_node);
+                out_matrix.append_node(&out_node);
                 e1 = *e1.next_;
                 continue;
             } else {
                 SparseNode out_node = e2;
                 out_node.next_ = nullptr;
-                out_matrix.append_node(out_node);
+                out_matrix.append_node(&out_node);
                 e2 = *e2.next_;
 
                 continue;
@@ -174,13 +179,13 @@ SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
             SparseNode out_node = e1;
 
             out_node.next_ = nullptr;
-            out_matrix.append_node(out_node);
+            out_matrix.append_node(&out_node);
             e1 = *e1.next_;
             continue;
           } else {
             SparseNode out_node = e2;
             out_node.next_ = nullptr;
-            out_matrix.append_node(out_node);
+            out_matrix.append_node(&out_node);
             e2 = *e2.next_;
 
             continue;
@@ -195,13 +200,13 @@ SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
           SparseNode out_node = e2;
 
           out_node.next_ = nullptr;
-          out_matrix.append_node(out_node);
+          out_matrix.append_node(&out_node);
           e2 = *e2.next_;
         }
         SparseNode out_node = e2;
         out_node.next_ = nullptr;
 
-        out_matrix.append_node(out_node);
+        out_matrix.append_node(&out_node);
     }
 
     if(e2.next_ == nullptr) {
@@ -209,14 +214,15 @@ SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
             SparseNode out_node = e1;
 
             out_node.next_ = nullptr;
-            out_matrix.append_node(out_node);
+            out_matrix.append_node(&out_node);
             e1 = *e1.next_;
         }
         SparseNode out_node = e1;
         out_node.next_ = nullptr;
 
-        out_matrix.append_node(out_node);
+        out_matrix.append_node(&out_node);
     }
 
     return out_matrix;
 }
+

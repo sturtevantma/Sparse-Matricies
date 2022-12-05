@@ -15,6 +15,9 @@ public:
     SparseNode* head; // A pointer to the head node
 
     SparseMatrix(int M, int N); // Constructor for SparseMatrix
+    SparseMatrix(SparseNode head, int M, int N);
+    SparseMatrix(std::string fname);
+
     void append_node(SparseNode *n); // Adds a node into the appropriate position
     void remove_node(int x, int y); // Removes a node based on coords (x,y)
 
@@ -26,4 +29,7 @@ public:
     SparseMatrix left_multiply(SparseMatrix matrix2); // Function for left multiplication (*note this function just returns right_multiply of matrix2 with this)
     SparseMatrix right_multiply(SparseMatrix matrix2); // Function for right multiplication
     SparseMatrix add(SparseMatrix matrix2); // Function for addition
+
+    void read_file(std::string fname);
+    void save_file(std::string fname);
 };
