@@ -1,43 +1,45 @@
+#include "SparseMatrix.h"
 
-SparseMatrix() {
+SparseMatrix::SparseMatrix() {
   
 }
 
-void append_node(int x, int y, int val){
+void SparseMatrix::append_node(int x, int y, int val){
 }
 
-void remove_node(int x, int y){
+void SparseMatrix::remove_node(int x, int y){
 }
 
-SparseMatrix operator+(const SparseMatrix& matrix2) {
-
-}
-
-SparseMatrix operator*(const SparseMatrix& matrix2) {
+SparseMatrix SparseMatrix::operator+(const SparseMatrix& matrix2) {
 
 }
 
-SparseMatrix operator*(const int scalar) {
+SparseMatrix SparseMatrix::operator*(const SparseMatrix& matrix2) {
 
 }
 
-SparseMatrix transpose() {
+SparseMatrix SparseMatrix::operator*(const int scalar) {
 
 }
-SparseMatrix left_multiply(SparseMatrix matrix2) {
+
+SparseMatrix SparseMatrix::transpose() {
+
+}
+SparseMatrix SparseMatrix::left_multiply(SparseMatrix matrix2) {
     return right_multiply(*this);
 }
-SparseMatrix right_multiply(SparseMatrix matrix2) {
+
+SparseMatrix SparseMatrix::right_multiply(SparseMatrix matrix2) {
     // When multiplying m x n matrix and n x p matrix
     //If the columns of A do not match the rows of B
-    if (!this->N == matrix2.M) {
+    if (this->N != matrix2.M) {
         throw std::invalid_argument("Matrix multiplication can only occur between M x N and N x P matrices.");
     }
     // Make a new Sparse Matrix sized m * p (Rows of first by columns of second)
     SparseMatrix multMatrix(this->M, matrix2.N);
 
     //TO BE FIXED: Accessing nodes from the first matrix so that .val can be used for multiplication
-    SparseNode leftNode = *this.head;
+    SparseNode leftNode = *this->head;
 
     //Node to add to new linked list representing the third matrix
     SparseNode multNode;
@@ -46,11 +48,11 @@ SparseMatrix right_multiply(SparseMatrix matrix2) {
     // For every row in A compare every nonzero element (k) to it's corresponding elemeint in B.
     for (int i = 0; i < this->M; ++i){
         //If the node's y value is the same as the matrix's x value
-        if (temp.y = this->M){
+        if (temp.y == this->M){
             // If B(k) is zero, throw out k. (k * 0)
-            if (temp.val = 0){
+            if (!temp.val){
                 //CHECK: Make sure the throw is correct, might need to throw something specific.
-                throw;
+                continue;
             }
             // Otherwise, multiply B(k) and k, and the new node value is the product at [m][p].
             else {
@@ -75,6 +77,6 @@ SparseMatrix right_multiply(SparseMatrix matrix2) {
     return multMatrix;
 }
 
-SparseMatrix add(SparseMatrix matrix2) {
+SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
 
 }
