@@ -31,49 +31,38 @@ SparseMatrix SparseMatrix::left_multiply(SparseMatrix matrix2) {
 
 SparseMatrix SparseMatrix::right_multiply(SparseMatrix matrix2) {
     // When multiplying m x n matrix and n x p matrix
-    //If the columns of A do not match the rows of B
+    // If the columns of A do not match the rows of B
     if (this->N != matrix2.M) {
         throw std::invalid_argument("Matrix multiplication can only occur between M x N and N x P matrices.");
     }
+
     // Make a new Sparse Matrix sized m * p (Rows of first by columns of second)
     SparseMatrix multMatrix(this->M, matrix2.N);
 
-    //TO BE FIXED: Accessing nodes from the first matrix so that .val can be used for multiplication
+    // Node from the left matrix
     SparseNode leftNode = *this->head;
 
-    //Node to add to new linked list representing the third matrix
+    // Node from the matrix passed into the function
+    SparseNode rightNode = *matrix2.head;
+
+    // Node to add to new linked list representing the third matrix
     SparseNode multNode;
-    SparseNode temp = *matrix2.head;
-    
-    // For every row in A compare every nonzero element (k) to it's corresponding elemeint in B.
-    for (int i = 0; i < this->M; ++i){
-        //If the node's y value is the same as the matrix's x value
-        if (temp.y == this->M){
-            // If B(k) is zero, throw out k. (k * 0)
-            if (!temp.val){
-                //CHECK: Make sure the throw is correct, might need to throw something specific.
-                continue;
-            }
-            // Otherwise, multiply B(k) and k, and the new node value is the product at [m][p].
-            else {
-                multNode.x = this->M;
-                multNode.y = temp.y;
-                //PART OF THE FIX: The multiplication that occurs at the node values
-                //CHECK: The values that are not zero need to be added together in the total new value, meaning it needs to be the sum, yes?
-                multNode.val += temp.val * leftNode.val;
-            }
-        } 
-    }
-    //STILL NEED A WAY TO RETURN THE PRODUCT MATRIX
-    //Thoughts / process started below
-        //Set every index from the multiplication that was not zero to the value, otherwise all values are zero.
-    for (int i = 0; i < this->M; ++i){
-        for (int j = 0; j < matrix2.N; ++j){
-            if (multNode.x == i && multNode.y == j){
-                
+    SparseNode temp;
+
+    // For every row in A
+    for(int j = 1; j <= this->M; j++){
+        // Compare every nonzero element k
+        while(leftNode.y = j){
+            while(rightNode.next_ != nullptr){
+                // if there is a value at this coordinate in both matrices, multiply. Otherwise, continue.
+                if (rightNode.x == j){
+                    temp.val += leftNode.val * rightNode.val;
+                }
             }
         }
+        multMatrix.append_node(*temp);
     }
+    
     return multMatrix;
 }
 
