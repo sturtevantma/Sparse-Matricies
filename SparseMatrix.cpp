@@ -79,32 +79,6 @@ void SparseMatrix::append_node(SparseNode *n){
 
 }
 
-void SparseMatrix::remove_node(int x, int y){
-    SparseNode *temp;
-    SparseNode *newTemp;
-
-    if(head->x == x && head->y == y) {
-        temp = head;
-        head = head->next_;
-        free(temp);
-    }
-    else {
-        newTemp = head;
-        while(newTemp->next_ != nullptr) {
-            if (newTemp->next_->x == x && newTemp->next_->y == y) {
-                temp = newTemp->next_;
-                newTemp->next_ = newTemp->next_->next_;
-                free(temp);
-                break;
-            }
-            else {
-                newTemp = newTemp->next_;
-            }
-        }
-    }
-
-}
-
 int SparseMatrix::index(int x, int y) {
     SparseNode *node = this->head;
     while(node->next_ != nullptr) {
@@ -132,7 +106,26 @@ SparseMatrix SparseMatrix::operator*(const int scalar) {
 }
 
 SparseMatrix SparseMatrix::transpose() {
-    return *this;
+    SparseMatrix *transposed = new SparseMatrix(this->N, this->M);
+    SparseNode *element = this->head;
+
+    while(element->next_ != nullptr) {
+        SparseNode *tNode = (SparseNode*)malloc(sizeof(SparseNode));  
+        tNode->x = element->y;
+        tNode->y = element->x;
+        tNode->val = element->val;
+        tNode->next_ = nullptr;
+        transposed->append_node(tNode); 
+        element= element->next_;
+    }
+    SparseNode *tNode= (SparseNode*)malloc(sizeof(SparseNode));
+    tNode->x = element->y;
+    tNode->y = element->x;
+    tNode->val = element->val;
+    tNode->next_ = nullptr;
+    transposed->append_node(tNode);
+
+    return *transposed;
 }
 
 SparseMatrix SparseMatrix::left_multiply(SparseMatrix matrix2) {
