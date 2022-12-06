@@ -1,5 +1,4 @@
 # Representing Sparse-Matricies Using Linked Lists
-TODO DESCRIPTION
 
 Group members:
 Nathan Fernandes,
@@ -9,7 +8,9 @@ Dean Geraci
 
 # Summary and Repo Address
 
-TODO SUMMARY
+Implementing a linked list into a program which creates nodes from data in a sparse matrix. Each node contains the coordinates, value,
+and a pointer to the next value in the list. With this linked list, we are able to implement matrix addition, multiplication,
+scalar multiplication, and transposing a matrix with more memory efficiency than if arrays were used.
 
 Repo Address: https://github.com/sturtevantma/Sparse-Matricies
 
@@ -31,7 +32,7 @@ The value at (x,y)
 A pointer to the next node
 
 ### SparseMatrix
-TODO Description
+A linked list of SparseNodes with functions for basic matrix operations.
 
 `SparseNode::head`  
 A pointer to the head node
