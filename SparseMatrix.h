@@ -22,7 +22,6 @@ public:
     SparseMatrix(std::string fname);
 
     void append_node(SparseNode *n); // Adds a node into the appropriate position
-    void remove_node(int x, int y); // Removes a node based on coords (x,y)
 
     SparseMatrix operator+(const SparseMatrix& matrix2); // Defines behavior for the addition operator
     SparseMatrix operator*(const SparseMatrix& matrix2); // Defines behavior for the multiplication operator on 2 SparseMatricies
