@@ -17,7 +17,7 @@ Repo Address: https://github.com/sturtevantma/Sparse-Matricies
 # Documentation
 
 ### SparseNode
-Is a class that contains the x & y coordinates of a node, the value at the x & y coordinates, and also a pointer that points to the next node.
+Is a struct that contains the x & y coordinates of a node, the value at the x & y coordinates, and also a pointer that points to the next node.
 
 `SparseNode::x`  
 The horizontal posistion of the node ( 0 is left column )
