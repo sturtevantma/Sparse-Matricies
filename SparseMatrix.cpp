@@ -315,5 +315,24 @@ SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
 }
 
 SparseMatrix SparseMatrix::scalar_multiply(int scalar) {
-    return *this;
+    SparseMatrix *multiplied = new SparseMatrix(this->N, this->M);
+    SparseNode *element = this->head;
+
+    while(element->next_ != nullptr) {
+        SparseNode *tNode = (SparseNode*)malloc(sizeof(SparseNode));
+        tNode->x = element->x;
+        tNode->y = element->y;
+        tNode->val = element->val * scalar;
+        tNode->next_ = nullptr;
+        multiplied->append_node(tNode); 
+        element= element->next_;
+    }
+    SparseNode *tNode= (SparseNode*)malloc(sizeof(SparseNode));
+    tNode->x = element->x;
+    tNode->y = element->y;
+    tNode->val = element->val * scalar;
+    tNode->next_ = nullptr;
+    multiplied->append_node(tNode);
+
+    return *multiplied;
 }
