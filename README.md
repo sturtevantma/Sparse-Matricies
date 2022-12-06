@@ -42,9 +42,6 @@ Constructor for SparseMatrix
 `SparseMatrix::append_node()`  
 Adds a node into the appropriate position
 
-`SparseMatrix::remove_node()`  
-Removes a node based on coords (x,y)
-
 `SparseMatrix::operator+()`  
 Defines behavior for the addition operator
 
