@@ -39,13 +39,13 @@ int main(int argc, char* argv[]) {
   if(multiply) {
     SparseMatrix A(matrixA);
     SparseMatrix B(matrixB);
-    SparseMatrix C = A.right_multiply(B);
+    SparseMatrix C = A * B;
     C.save_file(fname_out);
 
   } else if(add) {
     SparseMatrix A(matrixA);
     SparseMatrix B(matrixB);
-    SparseMatrix C = A.add(B);
+    SparseMatrix C = A + B;
     C.save_file(fname_out);
 
   } else if(s_multiply) {
@@ -58,5 +58,4 @@ int main(int argc, char* argv[]) {
     SparseMatrix At = A.transpose();
     At.save_file(fname_out);
   }
-  std::cout << '\n';
 }

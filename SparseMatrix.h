@@ -12,9 +12,11 @@ private:
     int M = 0; // The number of rows
     int N = 0; // The number of columns
 
+
 public:
     SparseNode* head = nullptr; // A pointer to the head node
 
+    int index(int x, int y);
     SparseMatrix(int M, int N); // Constructor for SparseMatrix
     SparseMatrix(SparseNode head, int M, int N);
     SparseMatrix(std::string fname);

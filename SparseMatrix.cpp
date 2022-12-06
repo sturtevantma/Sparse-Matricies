@@ -44,17 +44,18 @@ void SparseMatrix::read_file(std::string fname){
         }
     }
 }
+
 void SparseMatrix::save_file(std::string fname){
     std::ofstream out(fname);
     out << this->M << ' ' << this->N << '\n';
     
-    SparseNode node = *this->head;
+    SparseNode *node = this->head;
     for(int y = 1; y <= this->M; y++) {
         for(int x = 1; x <= this->N; x++) {
-            if(node.x == x && node.y == y) {
-                out << node.val << ' ';
-                if(node.next_ != nullptr) {
-                    node = *node.next_;
+            if(node->x == x && node->y == y) {
+                out << node->val << ' ';
+                if(node->next_ != nullptr) {
+                    node = node->next_;
                 }
             } else {
                 out << "0 ";
@@ -104,6 +105,20 @@ void SparseMatrix::remove_node(int x, int y){
 
 }
 
+int SparseMatrix::index(int x, int y) {
+    SparseNode *node = this->head;
+    while(node->next_ != nullptr) {
+        if(node->x == x && node->y == y) {
+            return node->val;
+        }
+        node = node->next_;
+    }
+    if(node->x == x && node->y == y) {
+        return node->val;
+    }
+    return 0;
+}
+
 SparseMatrix SparseMatrix::operator+(const SparseMatrix& matrix2) {
     return this->add(matrix2);
 }
@@ -121,7 +136,7 @@ SparseMatrix SparseMatrix::transpose() {
 }
 
 SparseMatrix SparseMatrix::left_multiply(SparseMatrix matrix2) {
-    return right_multiply(*this);
+    return matrix2.right_multiply(*this);
 }
 
 SparseMatrix SparseMatrix::right_multiply(SparseMatrix matrix2) {
@@ -140,24 +155,23 @@ SparseMatrix SparseMatrix::right_multiply(SparseMatrix matrix2) {
     // Node from the matrix passed into the function
     SparseNode rightNode = *matrix2.head;
 
-    // Node to add to new linked list representing the third matrix
-    SparseNode multNode;
-    SparseNode temp;
-
-    // For every row in A
-    for(int j = 1; j <= this->M; j++){
-        // Compare every nonzero element k
-        while(leftNode.y == j){
-            while(rightNode.next_ != nullptr){
-                // if there is a value at this coordinate in both matrices, multiply. Otherwise, continue.
-                if (rightNode.x == j){
-                    temp.val += leftNode.val * rightNode.val;
-                }
+    for(int y = 1; y <= this->M; y++) {
+        for(int x = 1; x <= matrix2.N; x++) {
+            int sum = 0;
+            for(int i = 1; i <= this->N; i++) {
+                sum += this->index(i,y) * matrix2.index(x,i);
+            }
+            if(sum) {
+                SparseNode *out_node = (SparseNode*)malloc(sizeof(SparseNode));
+                out_node->x = x;
+                out_node->y = y;
+                out_node->val = sum;
+                out_node->next_ = nullptr;
+                multMatrix.append_node(out_node);
             }
         }
-        multMatrix.append_node(&temp);
     }
-    
+  
     return multMatrix;
 }
 
@@ -187,14 +201,17 @@ SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
 
             int val = e1.val + e2.val;
 
-            SparseNode out_node;
-            out_node.x = e1.x;
-            out_node.y = e1.y;
-            out_node.val = val;
-            out_matrix.append_node(&out_node);
+            SparseNode *out_node = (SparseNode*)malloc(sizeof(SparseNode));
+            out_node->x = e1.x;
+            out_node->y = e1.y;
+            out_node->val = val;
+            out_node->next_ = nullptr;
+            out_matrix.append_node(out_node);
 
-            e1 = *e1.next_;
-            e2 = *e2.next_;
+            if(test) {
+                e1 = *e1.next_;
+                e2 = *e2.next_;
+            }
 
             continue;
         }
@@ -202,33 +219,51 @@ SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
         // Else add in the furthest back node
         if(e1.y == e2.y) {
             if(e1.x < e2.x) {
-                SparseNode out_node = e1;
+                SparseNode *out_node = (SparseNode*)malloc(sizeof(SparseNode));
+                out_node->x = e1.x;
+                out_node->y = e1.y;
+                out_node->val = e1.val;
+                out_node->next_ = nullptr;
+                out_matrix.append_node(out_node);
 
-                out_node.next_ = nullptr;
-                out_matrix.append_node(&out_node);
-                e1 = *e1.next_;
+                if(test)
+                    e1 = *e1.next_;
                 continue;
             } else {
-                SparseNode out_node = e2;
-                out_node.next_ = nullptr;
-                out_matrix.append_node(&out_node);
-                e2 = *e2.next_;
+                SparseNode *out_node = (SparseNode*)malloc(sizeof(SparseNode));
+                out_node->x = e2.x;
+                out_node->y = e2.y;
+                out_node->val = e2.val;
+                out_node->next_ = nullptr;
+                out_matrix.append_node(out_node);
+
+                if(test)
+                    e2 = *e2.next_;
 
                 continue;
             }
         } else {
           if(e1.y < e2.y) {
-            SparseNode out_node = e1;
+            SparseNode *out_node = (SparseNode*)malloc(sizeof(SparseNode));
+            out_node->x = e1.x;
+            out_node->y = e1.y;
+            out_node->val = e1.val;
+            out_node->next_ = nullptr;
+            out_matrix.append_node(out_node);
 
-            out_node.next_ = nullptr;
-            out_matrix.append_node(&out_node);
-            e1 = *e1.next_;
+            if(test)
+                e1 = *e1.next_;
             continue;
           } else {
-            SparseNode out_node = e2;
-            out_node.next_ = nullptr;
-            out_matrix.append_node(&out_node);
-            e2 = *e2.next_;
+            SparseNode *out_node = (SparseNode*)malloc(sizeof(SparseNode));
+            out_node->x = e2.x;
+            out_node->y = e2.y;
+            out_node->val = e2.val;
+            out_node->next_ = nullptr;
+            out_matrix.append_node(out_node);
+            
+            if(test)
+                e2 = *e2.next_;
 
             continue;
           }
@@ -236,33 +271,44 @@ SparseMatrix SparseMatrix::add(SparseMatrix matrix2) {
 
     }
 
+    if(e1.next_ == e2.next_) {
+        return out_matrix;
+    } 
     // Add remaining nodes to new matrix
     if(e1.next_ == nullptr) {
         while(e2.next_ != nullptr) {
-          SparseNode out_node = e2;
-
-          out_node.next_ = nullptr;
-          out_matrix.append_node(&out_node);
+          SparseNode *out_node = (SparseNode*)malloc(sizeof(SparseNode));
+          out_node->x = e2.x;
+          out_node->y = e2.y;
+          out_node->val = e2.val;
+          out_node->next_ = nullptr;
+          out_matrix.append_node(out_node);
           e2 = *e2.next_;
         }
-        SparseNode out_node = e2;
-        out_node.next_ = nullptr;
-
-        out_matrix.append_node(&out_node);
+          SparseNode *out_node = (SparseNode*)malloc(sizeof(SparseNode));
+          out_node->x = e2.x;
+          out_node->y = e2.y;
+          out_node->val = e2.val;
+          out_node->next_ = nullptr;
+          out_matrix.append_node(out_node);
     }
 
     if(e2.next_ == nullptr) {
         while(e1.next_ != nullptr) {
-            SparseNode out_node = e1;
-
-            out_node.next_ = nullptr;
-            out_matrix.append_node(&out_node);
+            SparseNode *out_node = (SparseNode*)malloc(sizeof(SparseNode));
+            out_node->x = e1.x;
+            out_node->y = e1.y;
+            out_node->val = e1.val;
+            out_node->next_ = nullptr;
+            out_matrix.append_node(out_node);
             e1 = *e1.next_;
         }
-        SparseNode out_node = e1;
-        out_node.next_ = nullptr;
-
-        out_matrix.append_node(&out_node);
+            SparseNode *out_node = (SparseNode*)malloc(sizeof(SparseNode));
+            out_node->x = e1.x;
+            out_node->y = e1.y;
+            out_node->val = e1.val;
+            out_node->next_ = nullptr;
+            out_matrix.append_node(out_node);
     }
 
     return out_matrix;
